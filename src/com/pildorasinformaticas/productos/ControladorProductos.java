@@ -20,7 +20,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-//Para GLASSFISH y PAYARA
+////Para GLASSFISH y PAYARA
 //@DataSourceDefinition(name = "java:app/jdbc/Productos",
 //url = "jdbc:mysql://localhost:3306/curso_sql",
 //className = "com.mysql.jdbc.Driver",
@@ -34,8 +34,8 @@ public class ControladorProductos extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-	@Resource(name="jdbc/Productos")
-//	@Resource(lookup = "java:app/jdbc/Productos")
+//	@Resource(name="jdbc/Productos")
+	@Resource(lookup = "java:app/jdbc/Productos")
 	private DataSource miPool;
 	
 	private ModeloProductos modeloProductos; 
