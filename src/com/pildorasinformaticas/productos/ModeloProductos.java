@@ -13,12 +13,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.naming.java.javaURLContextFactory;
-
 
 public class ModeloProductos {
 
-	private DataSource origenDatos;
+	public DataSource origenDatos;
 
 	public ModeloProductos(DataSource origenDatos) {
 		this.origenDatos = origenDatos;
@@ -31,6 +29,10 @@ public class ModeloProductos {
 		try {
 			
 			Connection miConexion =  origenDatos.getConnection();
+			
+//			System.out.println("origenDatos: " + origenDatos);
+//			System.out.println("miConexion: " + miConexion);
+			
 			String miSql = "SELECT * FROM PRODUCTOS";
 //			String miSql = "SELECT CODIGOARTICULO, SECCION, NOMBREARTICULO, PRECIO,"
 //			    			+ " FECHA, DATE_FORMAT(FECHA,'%d/%m/%Y') AS FE, IMPORTADO, PAISDEORIGEN FROM PRODUCTOS";
@@ -65,7 +67,9 @@ public class ModeloProductos {
 
 		try{
 			Connection miConexion = origenDatos.getConnection();
-			String sql = "INSERT INTO PRODUCTOS (CODIGOARTICULO, SECCION, NOMBREARTICULO, PRECIO, FECHA, IMPORTADO, PAISDEORIGEN) " + 
+			String sql = "INSERT INTO PRODUCTOS (CODIGOARTICULO, SECCION, "
+					+ "NOMBREARTICULO, PRECIO, FECHA, IMPORTADO, "
+					+ "PAISDEORIGEN) " + 
 					 "VALUES(?,?,?,?,?,?,?)";
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);
 			
@@ -82,6 +86,10 @@ public class ModeloProductos {
 			System.out.println("dateUtil:" + dateUtil);
 			
 			miStatement.setDate(5, dateSql);
+
+//			//El campo DATE tb admite un STRING con el formato actual
+//			miStatement.setString(5, nuevoProducto.getFecha());
+			
 			miStatement.setString(6, nuevoProducto.getImportado());
 			miStatement.setString(7, nuevoProducto.getpOrig());
 			

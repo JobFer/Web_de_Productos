@@ -1,4 +1,4 @@
-package com.pildorasinformaticas.productos;
+ package com.pildorasinformaticas.productos;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,9 +22,6 @@ public class ServletPruebas extends HttpServlet {
 	@Resource(name="jdbc/Productos")
 	private DataSource miPool;
 	
-//    public ServletPruebas() {
-//        super();
-//    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -50,7 +47,7 @@ public class ServletPruebas extends HttpServlet {
 //        	out.println(lista);
         	
         }catch (Exception e) {
-        	e.printStackTrace();
+        	System.out.println("Excepción: " + e.getMessage());
 		}
 	
 	}

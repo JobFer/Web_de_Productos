@@ -87,7 +87,8 @@
 	</c:url>	
 
 	<div id="contenedorBoton">
-		<input type="button" value="Insertar Registro" onclick="window.location.href='inserta_producto.jsp'"/>
+		<input type="button" value="Insertar Registro" 
+		onclick="window.location.href='inserta_producto.jsp'"/>
 		<br/> 
 		<a href="${linkActualizar}">Refrescar</a>
 	</div>

@@ -3,10 +3,12 @@ package com.pildorasinformaticas.productos;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.sql.DataSourceDefinition;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,23 +20,39 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+//Para GLASSFISH y PAYARA
+//@DataSourceDefinition(name = "java:app/jdbc/Productos",
+//url = "jdbc:mysql://localhost:3306/curso_sql",
+//className = "com.mysql.jdbc.Driver",
+//user = "root",
+//password = "123456789",
+//databaseName = "curso_sql",
+//serverName = "localhost")
+
 @WebServlet("/ControladorProductos")
 public class ControladorProductos extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Resource(name="jdbc/Productos")
+//	@Resource(lookup = "java:app/jdbc/Productos")
 	private DataSource miPool;
 	
-	private ModeloProductos modeloProductos;
+	private ModeloProductos modeloProductos; 
+	
+//	public ControladorProductos() {
+//		modeloProductos = new ModeloProductos(miPool);
+//	}
 	
 	@Override
-	public void init() throws ServletException {
+	public void init() {//throws ServletException {
 //		super.init();
-//		try {
+		try {
 			modeloProductos = new ModeloProductos(miPool);
-//		} catch (Exception e) {
+		} catch (Exception e) {
 //			throw new ServletException(e);
-//		}
+			System.out.println("Excepción: " + e.getMessage());
+		}
 	}
 
 	
@@ -43,6 +61,8 @@ public class ControladorProductos extends HttpServlet {
 //		
 //		List<Productos> productos;
 //		try {
+//			System.out.println("modeloProductos.origenDatos: " + modeloProductos.origenDatos + "\n");
+//
 //			productos = modeloProductos.getProductos();
 //			request.setAttribute("LISTAPRODUCTOS", productos);
 ////			RequestDispatcher miDispatcher = request.getRequestDispatcher("/ListaProductos2.jsp");
@@ -51,7 +71,11 @@ public class ControladorProductos extends HttpServlet {
 //			miDispatcher.forward(request, response);
 //		}
 //		catch (Exception e) {
-//			e.printStackTrace();
+////			e.printStackTrace();
+//			request.setAttribute("excepcion", e.getMessage());
+//			request.setAttribute("LISTAPRODUCTOS", null);
+//			RequestDispatcher miDispatcher = request.getRequestDispatcher("/ListaProductos.jsp");
+//			miDispatcher.forward(request, response);
 //		}
 //	}
 	
@@ -65,6 +89,7 @@ public class ControladorProductos extends HttpServlet {
 		
 		if(elComando == null)
 			elComando = "listar";
+		
 		
 		/************************************************/
 		
@@ -164,6 +189,7 @@ public class ControladorProductos extends HttpServlet {
 		
 	}
 
+	
 	private void eliminarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
 		String codigoArticulo = request.getParameter("CArticulo");
@@ -213,12 +239,12 @@ public class ControladorProductos extends HttpServlet {
 		String Importado = request.getParameter("importado");
 		String PaisOrigen = request.getParameter("POrig");
 		
-		Productos NuevoProducto = new Productos(CodArticulo,Seccion, NombreArticulo, Precio, Fecha, Importado, PaisOrigen);
+		Productos NuevoProducto = new Productos(CodArticulo,Seccion, 
+				NombreArticulo, Precio, Fecha, Importado, PaisOrigen);
 		
 		modeloProductos.agregarElNuevoProducto(NuevoProducto);
 		
 		obtenerProductos(request, response);
-				
 	}
 
 
@@ -238,8 +264,8 @@ public class ControladorProductos extends HttpServlet {
 		
 		try {
 			
-			List<Productos> productos = modeloProductos.getProductos();
-			request.setAttribute("LISTAPRODUCTOS", productos);
+//			List<Productos> productos = modeloProductos.getProductos();
+			request.setAttribute("LISTAPRODUCTOS", null); 
 			request.setAttribute("excepcion", ex);
 			RequestDispatcher miDispatcher = request.getRequestDispatcher("/ListaProductos.jsp");
 //			RequestDispatcher miDispatcher = request.getRequestDispatcher("/ListaProductos2.jsp");
