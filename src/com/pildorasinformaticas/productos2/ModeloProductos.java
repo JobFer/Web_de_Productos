@@ -13,8 +13,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.naming.java.javaURLContextFactory;
-
 
 public class ModeloProductos {
 
@@ -27,9 +25,9 @@ public class ModeloProductos {
 	public List<Productos> getProductos() throws Exception{
 		
 		List<Productos> productos = new ArrayList<Productos>(); //Ponemos el generico para que no salga un WARNING
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			String miSql = "SELECT * FROM PRODUCTOS";
 			//    	String miSql = "SELECT CODIGOARTICULO, SECCION, NOMBREARTICULO, PRECIO,"
 			//    			+ " FECHA, DATE_FORMAT(FECHA,'%Y-%m-%d') AS FE, IMPORTADO, PAISDEORIGEN FROM PRODUCTOS";
@@ -50,21 +48,22 @@ public class ModeloProductos {
 				
 				Productos temProd = new Productos(cArt, seccion, nArt, precio, fecha, importado, p_orig);
 				productos.add(temProd);
+				
 			}
 			
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw new Exception("Error en la BD al LISTAR");
-		}
+		} 
     	return productos;
 	}
 
 	//public void agregarElNuevoProducto(Productos nuevoProducto) throws ParseException {
 	public void agregarElNuevoProducto(Productos nuevoProducto) throws Exception {
 
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "INSERT INTO PRODUCTOS (CODIGOARTICULO, SECCION, NOMBREARTICULO, PRECIO, FECHA, IMPORTADO, PAISDEORIGEN) " + 
 					 "VALUES(?,?,?,?,?,?,?)";
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);
@@ -86,22 +85,22 @@ public class ModeloProductos {
 			miStatement.setDate(5, dateSql);
 			miStatement.setString(6, nuevoProducto.getImportado());
 			miStatement.setString(7, nuevoProducto.getpOrig());
-			
+			 
 			miStatement.execute();
 			
 		} catch (SQLException e) {
 //			e.printStackTrace();
 			throw new Exception("Error en la BD al INSERTAR");
 		}
-
+ 
 	}
 
 	public Productos getProducto(String codigoArticulo) throws Exception {
 		
 		Productos elProducto = null;
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "SELECT * FROM PRODUCTOS WHERE CODIGOARTICULO = ?";
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);
 			miStatement.setString(1, codigoArticulo);
@@ -132,9 +131,9 @@ public class ModeloProductos {
 
 	public void actualizarProducto(Productos productoActualizado) throws Exception {
 		
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "UPDATE PRODUCTOS SET SECCION = ?, NOMBREARTICULO = ?,"
 					+ " PRECIO = ?, FECHA = ?, IMPORTADO = ?, PAISDEORIGEN = ? "
 					+ "WHERE CODIGOARTICULO = ?";
@@ -162,9 +161,9 @@ public class ModeloProductos {
 
 	public void eliminarProducto(String codigoArticulo) throws Exception{
 		
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "DELETE FROM PRODUCTOS WHERE CODIGOARTICULO = ?";
 
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);

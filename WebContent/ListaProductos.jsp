@@ -73,8 +73,12 @@
 				<td>${prod.importado}</td>
 				<td>${prod.pOrig}</td>
 				
-				<td><a href="${linkTemp}">Actualizar</a>&nbsp;<a href="${linkTempEliminar}">Eliminar</a></td>
-<%-- 			<td><a href="ControladorProductos?instruccion=cargar&CArticulo=${prod.cArt}">Actualizar</a></td> --%>				
+				<td>
+					<a href="${linkTemp}">Actualizar</a>&nbsp;
+					<a href="${linkTempEliminar}">Eliminar</a>
+				</td>
+<%-- 			<td><a href="ControladorProductos?instruccion=cargar
+					&CArticulo=${prod.cArt}">Actualizar</a></td>				 --%>
 							
 			</tr>
 			 

@@ -10,7 +10,7 @@
 <body>
 
 <!-- 	Forma 1 -->
-<%-- 	<jsp:forward page="ControladorProductos"/> --%>
+	<jsp:forward page="ControladorProductos"/>
 	
 	
 <%-- 		<jsp:param name="" value="" /> --%>
@@ -18,7 +18,7 @@
 	
 
 <!-- 	Forma 2 -->	
-	   <c:redirect url="ControladorProductos"/>
+<%-- 	   <c:redirect url="ControladorProductos"/> --%>
 
 
 </body>

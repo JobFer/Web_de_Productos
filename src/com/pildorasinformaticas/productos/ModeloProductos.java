@@ -25,10 +25,9 @@ public class ModeloProductos {
 	public List<Productos> getProductos() throws Exception{
 		
 		List<Productos> productos = new ArrayList<Productos>(); //Ponemos el generico para que no salga un WARNING
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try {
-			
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try {
+//			Connection miConexion =  origenDatos.getConnection();
 			
 //			System.out.println("origenDatos: " + origenDatos);
 //			System.out.println("miConexion: " + miConexion);
@@ -65,8 +64,9 @@ public class ModeloProductos {
 	//public void agregarElNuevoProducto(Productos nuevoProducto) throws ParseException {
 	public void agregarElNuevoProducto(Productos nuevoProducto) throws Exception {
 
-		try{
-			Connection miConexion = origenDatos.getConnection();
+		try(Connection miConexion = origenDatos.getConnection()){
+//		try{
+//			Connection miConexion = origenDatos.getConnection();
 			String sql = "INSERT INTO PRODUCTOS (CODIGOARTICULO, SECCION, "
 					+ "NOMBREARTICULO, PRECIO, FECHA, IMPORTADO, "
 					+ "PAISDEORIGEN) " + 
@@ -106,10 +106,9 @@ public class ModeloProductos {
 	public Productos getProducto(String codigoArticulo) throws Exception {
 		
 		Productos elProducto = null;
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try{
-			
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try{
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "SELECT * FROM PRODUCTOS WHERE CODIGOARTICULO = ?";
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);
 			miStatement.setString(1, codigoArticulo);
@@ -140,9 +139,9 @@ public class ModeloProductos {
 
 	public void actualizarProducto(Productos productoActualizado) throws Exception {
 		
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try{
-			Connection miConexion =  origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try{
+//			Connection miConexion =  origenDatos.getConnection();
 			String sql = "UPDATE PRODUCTOS SET SECCION = ?, NOMBREARTICULO = ?,"
 					+ " PRECIO = ?, FECHA = ?, IMPORTADO = ?, PAISDEORIGEN = ? "
 					+ "WHERE CODIGOARTICULO = ?";
@@ -168,15 +167,15 @@ public class ModeloProductos {
 
 	public void eliminarProducto(String codigoArticulo) throws Exception{
 		
-//		try(Connection miConexion =  origenDatos.getConnection()) {
-		try{
-			Connection miConexion = origenDatos.getConnection();
+		try(Connection miConexion =  origenDatos.getConnection()) {
+//		try{
+//			Connection miConexion = origenDatos.getConnection();
 			String sql = "DELETE FROM PRODUCTOS WHERE CODIGOARTICULO = ?";
 
 			PreparedStatement miStatement = miConexion.prepareStatement(sql);
 			miStatement.setString(1, codigoArticulo);
 
-			miStatement.executeUpdate();
+			System.out.println("retorno: " + miStatement.executeUpdate());
 			
 		} catch (Exception e) {
 //			e.printStackTrace();

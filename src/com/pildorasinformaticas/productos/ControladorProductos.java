@@ -34,8 +34,8 @@ public class ControladorProductos extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
-//	@Resource(name="jdbc/Productos")
-	@Resource(lookup = "java:app/jdbc/Productos")
+	@Resource(name="jdbc/Productos")
+//	@Resource(lookup = "java:app/jdbc/Productos")
 	private DataSource miPool;
 	
 	private ModeloProductos modeloProductos; 
@@ -193,6 +193,8 @@ public class ControladorProductos extends HttpServlet {
 	private void eliminarProductos(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
 		String codigoArticulo = request.getParameter("CArticulo");
+		System.out.println("codigoArticulo: " + codigoArticulo);
+		
 		modeloProductos.eliminarProducto(codigoArticulo);
 		
 		obtenerProductos(request, response);	
@@ -220,6 +222,7 @@ public class ControladorProductos extends HttpServlet {
 	private void cargaProductos(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String codigoArticulo = request.getParameter("CArticulo");
+		
 		Productos elProducto = modeloProductos.getProducto(codigoArticulo);
 		request.setAttribute("ProductoActualizar", elProducto);
 		
